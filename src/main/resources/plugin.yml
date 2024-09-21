@@ -1,0 +1,6 @@
+name: EZPrivateMessages
+version: '1.0-SNAPSHOT'
+main: dev.bedless.ezPrivateMessages.EZPrivateMessages
+
+softdepend:
+  - PlaceholderAPI
