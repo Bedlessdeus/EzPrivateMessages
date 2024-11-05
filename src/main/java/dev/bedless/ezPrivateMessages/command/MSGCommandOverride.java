@@ -6,6 +6,7 @@ import dev.bedless.ezPrivateMessages.EZPrivateMessages;
 import dev.bedless.ezPrivateMessages.config.CString;
 import dev.bedless.ezPrivateMessages.config.Messages;
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,15 +19,31 @@ public class MSGCommandOverride extends BaseCommand {
     @CommandCompletion("@players")
     @Description("Message a player")
     @Syntax("&f<name> <message> &e- Player Name, Message")
-    public void onMessage(CommandSender commandSender, OfflinePlayer receiver, String... message) {
+    @CatchUnknown
+    public void onMessage(CommandSender commandSender, @Optional String receiverName, @Optional String... message) {
         if (message.length == 0) {
-            commandSender.sendMessage("§eUsage: §a/msg §f<name> <message> §e- Player Name, Message");
+            commandSender.sendMessage(EZPrivateMessages.getMessages().getCommandUsage().translate()
+                    .replace(CString.Placeholder.PREFIX, EZPrivateMessages.getMessages().getPrefix().toStringT())
+                    .replace(CString.Placeholder.MESSAGE, String.join(" ", message))
+                    .replace(CString.Placeholder.SENDER, commandSender.getName())
+                    .replace(CString.Placeholder.RECEIVER, "404")
+                    .toString());
             return;
         }
-        if (receiver == null) {
+        if (receiverName == null || Bukkit.getOfflinePlayer(receiverName) == null) {
             commandSender.sendMessage(EZPrivateMessages.getMessages().getTargetNotFound()
                     .replace(CString.Placeholder.PREFIX, EZPrivateMessages.getMessages().getPrefix().toStringT())
                     .replace(CString.Placeholder.RECEIVER, "404").toStringT());
+            return;
+        }
+        OfflinePlayer receiver = Bukkit.getOfflinePlayer(receiverName);
+        if (message == null) {
+            commandSender.sendMessage(EZPrivateMessages.getMessages().getCommandUsage().translate()
+                    .replace(CString.Placeholder.PREFIX, EZPrivateMessages.getMessages().getPrefix().toStringT())
+                    .replace(CString.Placeholder.MESSAGE, String.join(" ", message))
+                    .replace(CString.Placeholder.SENDER, commandSender.getName())
+                    .replace(CString.Placeholder.RECEIVER, receiver.getName())
+                    .toString());
             return;
         }
         if (receiver.isOnline()) {

@@ -1,5 +1,6 @@
 package dev.bedless.ezPrivateMessages;
 
+import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
 import dev.bedless.ezPrivateMessages.command.EZPrivateMsgCommand;
 import dev.bedless.ezPrivateMessages.command.MSGCommandOverride;

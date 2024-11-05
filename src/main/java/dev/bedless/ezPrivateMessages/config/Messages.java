@@ -27,6 +27,7 @@ public class Messages extends BaseConfiguration {
             "%message%: Is replaced with the Message",
             "PAPI: These messages support PAPI, you may use Installed placeholders as you please!"
     })
+    public String CommandUsage = "&eUsage: &a/msg &f<name> <message> &e- Player Name, Message";
     public String TargetNotFound = "&c%receiver% is not online!";
     public String PlayerMSGSend = "&8[&bYou &8» %receiver%&8] &f%message%";
     public String PlayerMSGReceive = "&8[%sender% &8» &bYou&8] &f%message%";
@@ -43,6 +44,10 @@ public class Messages extends BaseConfiguration {
     }
 
     /*MSG*/
+    public CString getCommandUsage() {
+        return CString.fS(CommandUsage);
+    }
+
     public CString getTargetNotFound() {
         return CString.fS(TargetNotFound);
     }
